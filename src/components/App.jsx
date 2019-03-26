@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
+import Title from './Title';
 import SearchContainer from './SearchContainer';
+import { URLS } from '../config/config';
 import '../assets/styles/App.css'
 
 class App extends Component {
-
   constructor() {
     super();
 
@@ -28,7 +29,7 @@ class App extends Component {
       inputText: value
     });
 
-    if(value.length > 3) {
+    if(value.length >= 3) {
       this.debouncedSearch(value);
     }
   }
@@ -48,8 +49,9 @@ class App extends Component {
     });
   }
 
+  // Searches GitHub API for user suggestions based on an input value
   getSuggestions = async (val) => {
-    const requestUrl = '//api.github.com/search/users?q=' + val;
+    const requestUrl = `${URLS.SEARCH}${val}`;
 
     try {
       const response = await fetch(requestUrl);
@@ -58,26 +60,21 @@ class App extends Component {
         suggestions: parsed.items,
         showSuggestions: true,
       })
-
     } catch(e) {
-      this.setState({
-        error: e.response.data.message + '. Please try again in 1 minute.',
-        showSuggestions: false
-      });
+      this.displayError();
     }
   }
 
+  // Get more info about a user
   getUserData = async (user) => {
-    const requestUrl = '//api.github.com/users/' + user;
+    const requestUrl = `${URLS.USER}${user}`;
 
     try {
       const response = await fetch(requestUrl);
       const parsed = await response.json();
       this.updateSearchState(parsed);
     } catch(e) {
-      this.setState({
-        error: e,
-      });
+      this.displayError();
     }
   }
 
@@ -97,14 +94,26 @@ class App extends Component {
     });
   }
 
+  displayError = () => {
+    this.setState({
+      error: 'An error occurred. Please try again.',
+      showSuggestions: false
+    });
+  }
+
   render() {
     return (
-      <SearchContainer
-        state={this.state}
-        handleChange={this.handleChange}
-        clear={this.clearInput}
-        onClick={this.handleClick}
-      />
+      <main className="outer-container">
+        <div className="inner">
+          <Title />
+          <SearchContainer
+            state={this.state}
+            handleChange={this.handleChange}
+            clear={this.clearInput}
+            onClick={this.handleClick}
+          />
+        </div>
+      </main>
     );
   }
 }

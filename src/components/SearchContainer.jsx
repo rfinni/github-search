@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from './Title';
 import SearchField from './SearchField';
 import Suggestions from './Suggestions';
 import UserInfo from './UserInfo';
@@ -13,28 +12,25 @@ export const SearchContainer = (props) => {
     onClick,
   } = props;
   return (
-    <div className="outer-container">
-      <div className="inner">
-        <Title />
-        <section className="search-wrapper">
-          <SearchField
-            text={state.inputText}
-            handleChange={handleChange}
-            clear={clear}
+    <React.Fragment>
+      <section className="search-wrapper">
+        <SearchField
+          text={state.inputText}
+          handleChange={handleChange}
+          clear={clear}
+        />
+
+        {state.showSuggestions ? (
+          <Suggestions
+            items={state.suggestions}
+            handleClick={onClick}
           />
+        ) : null}
+      </section>
 
-          {state.showSuggestions ? (
-            <Suggestions
-              items={state.suggestions}
-              handleClick={onClick}
-            />
-          ) : null}
-        </section>
-
-        <p className="error">{state.error}</p>
-        {state.user ? <UserInfo user={state.userData} /> : null}
-      </div>
-    </div>
+      <p className="error">{state.error}</p>
+      {state.user ? <UserInfo user={state.userData} /> : null}
+    </React.Fragment>
   );
 };
 
