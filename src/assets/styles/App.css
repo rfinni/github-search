@@ -1,0 +1,190 @@
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #333333;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+input {
+  border: 1px solid #cccccc;
+}
+
+svg {
+  fill: #333333;
+}
+
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  height: 100vh;
+}
+
+.inner {
+  width: 450px;
+  margin-top: 100px;
+}
+
+.search-wrapper,
+.search-field {
+  position: relative;
+}
+
+.error {
+  color: #ff0000;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* App title */
+.app-title {
+  text-align: center;
+}
+
+.app-title h1 {
+  font-weight: 300;
+  font-size: 26px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.app-title .icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+
+/* Search styles */
+.search {
+  padding: 20px;
+  font-size: 18px;
+  width: 100%;
+  font-weight: 300;
+}
+
+.clear {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  top: 8px;
+  height: 100%;
+  width: 40px;
+  background: none;
+  border: none;
+}
+
+.clear span {
+  visibility: hidden;
+}
+
+/* Suggestion styles */
+.suggestions {
+  position: absolute;
+  top: 62px;
+  background: white;
+  width: 100%;
+  z-index: 1;
+  border: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
+  border-top: none;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestions li {
+  display: flex;
+  flex-direction: row;
+}
+
+.suggestions img {
+  margin-right: 10px;
+}
+
+.suggestions a {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  width: 100%;
+  font-weight: 300;
+  color: #222222;
+  background: #ffffff;
+  transition: background .3s ease;
+}
+
+.suggestions .avatar {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #cccccc;
+  vertical-align: middle;
+}
+
+.no-items {
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.suggestions a:hover {
+  background: #ebebeb;
+}
+
+/* User styles */
+.user-info {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .5s ease;
+}
+
+.user-info a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.user-image {
+  display: table-cell;
+}
+
+.user-image img {
+  border-radius: 50%;
+  max-width: 100px;
+  border: 1px solid #cccccc;
+}
+
+.user-data {
+  margin-left: 20px;
+}
+
+.user-data span {
+  line-height: 26px;
+}
+
+.user-data .name {
+  font-weight: 700;
+}
+
+.user-data span {
+  display: block;
+}
+
+.image-wrapper {
+  position: relative;
+}
