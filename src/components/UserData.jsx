@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserData = ({
-  user,
-}) => (
+const UserData = ({ user }) => (
   <div className="user-data">
     <span className="name">{user.name} ({user.login})</span>
     <span>{user.location}</span>

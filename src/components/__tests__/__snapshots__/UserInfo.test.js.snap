@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserInfo.jsx should render correctly 1`] = `
+<div
+  className="user-info"
+>
+  <a
+    href="https://api.github.com/users/rfinni"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    <div
+      className="image-wrapper"
+    >
+      <img
+        alt="Ryan Finni"
+        className="user-image"
+      />
+    </div>
+    <div
+      className="user-data"
+    >
+      <span
+        className="name"
+      >
+        Ryan Finni
+         (
+        rfinni
+        )
+      </span>
+      <span>
+        Chicago, IL
+      </span>
+      <span>
+        Joined GitHub in 
+        NaN
+      </span>
+    </div>
+  </a>
+</div>
+`;
