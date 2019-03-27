@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 const renderItems = (items, handleClick) => items.map((item, i) => (
   <li key={i}>
-    <a href="#" onClick={e => handleClick(e, item.login)}>
+    <button onClick={e => handleClick(e, item.login)}>
       <img className="avatar" src={item.avatar_url} alt={item.login} />
       {item.login}
-    </a>
+    </button>
   </li>
 ));
 
@@ -16,7 +16,7 @@ const Suggestions = ({
 }) => (
   <nav className="suggestions">
     <ul>
-      {items ? (
+      {items.length ? (
         renderItems(items, handleClick)
       ) : (
         <li className="no-items">Nothing was found.</li>

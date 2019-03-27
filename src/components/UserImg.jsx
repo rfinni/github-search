@@ -5,9 +5,7 @@ const UserImg = ({
   user,
 }) => (
   <div className="image-wrapper">
-    <a className="user-image" rel="noopener noreferrer" href={user.url} target="_blank">
-      <img src={user.avatar} alt={user.name} />
-    </a>
+    <img className="user-image" src={user.avatar} alt={user.name} />
   </div>
 );
 

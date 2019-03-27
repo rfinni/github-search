@@ -7,6 +7,7 @@ import UserInfo from './UserInfo';
 
 export const SearchContainer = ({
   isLoading,
+  showSuggestions,
   suggestions,
   userData,
   inputValue,
@@ -17,12 +18,13 @@ export const SearchContainer = ({
   <React.Fragment>
     <section className="search-wrapper">
       <SearchField
+        isLoading={isLoading}
         value={inputValue}
         handleChange={handleChange}
         handleClear={handleClearInput}
       />
 
-      {suggestions ? (
+      {showSuggestions ? (
         <Suggestions
           items={suggestions}
           handleClick={onClick}
@@ -35,6 +37,7 @@ export const SearchContainer = ({
 
 SearchContainer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  showSuggestions: PropTypes.bool.isRequired,
   suggestions: PropTypes.array.isRequired,
   userData: PropTypes.object.isRequired,
   inputValue: PropTypes.string.isRequired,

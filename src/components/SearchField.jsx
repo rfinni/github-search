@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SearchField = ({
+  isLoading,
   value,
   handleClear,
   handleChange,
 }) => (
   <div className="search-field">
+    {isLoading && <div className="loading-state" />}
     <input
       type="text"
       className="search"
@@ -32,6 +34,7 @@ const SearchField = ({
 );
 
 SearchField.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,

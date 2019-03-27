@@ -7,8 +7,10 @@ const UserInfo = ({
   user,
 }) => (
   <div className="user-info">
-    <UserImg user={user} />
-    <UserData user={user} />
+    <a rel="noopener noreferrer" href={user.url} target="_blank">
+      <UserImg user={user} />
+      <UserData user={user} />
+    </a>
   </div>
 );
 

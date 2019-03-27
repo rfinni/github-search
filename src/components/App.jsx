@@ -17,6 +17,7 @@ class App extends Component {
   state = {
     isLoading: false,
     suggestions: [],
+    showSuggestions: false,
     userData: {},
     inputValue: '',
     displayError: false,
@@ -42,6 +43,7 @@ class App extends Component {
   clearInput = () => {
     this.setState({
       suggestions: [],
+      showSuggestions: false,
       userData: {},
       inputValue: '',
       displayError: false,
@@ -53,10 +55,18 @@ class App extends Component {
     const requestUrl = `${URLS.SEARCH}${val}`;
 
     try {
+      this.toggleLoadingState();
       const response = await fetch(requestUrl);
       const parsed = await response.json();
 
-      this.setState({ suggestions: parsed.items })
+      // Set some artificial latency
+      setTimeout(() => {
+        this.setState({
+          suggestions: parsed.items,
+          showSuggestions: true,
+        });
+        this.toggleLoadingState();
+      }, 1000);
     } catch(e) {
       this.displayError();
     }
@@ -67,8 +77,11 @@ class App extends Component {
     const requestUrl = `${URLS.USERS}${user}`;
 
     try {
+      this.toggleLoadingState();
       const response = await fetch(requestUrl);
       const parsed = await response.json();
+
+      this.toggleLoadingState();
       this.updateSearchState(parsed);
     } catch(e) {
       this.displayError();
@@ -79,6 +92,7 @@ class App extends Component {
     this.setState({
       inputValue: data.login,
       suggestions: [],
+      showSuggestions: false,
       userData: {
         login: data.login,
         url: data.html_url,
@@ -106,6 +120,7 @@ class App extends Component {
     const {
       isLoading,
       suggestions,
+      showSuggestions,
       userData,
       inputValue,
       displayError,
@@ -118,6 +133,7 @@ class App extends Component {
           <SearchContainer
             isLoading={isLoading}
             suggestions={suggestions}
+            showSuggestions={showSuggestions}
             userData={userData}
             inputValue={inputValue}
             handleChange={this.handleChange}
