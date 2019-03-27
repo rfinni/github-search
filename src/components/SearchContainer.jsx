@@ -1,43 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import SearchField from './SearchField';
 import Suggestions from './Suggestions';
 import UserInfo from './UserInfo';
 
-export const SearchContainer = (props) => {
-  const {
-    state,
-    clear,
-    handleChange,
-    onClick,
-  } = props;
-  return (
-    <React.Fragment>
-      <section className="search-wrapper">
-        <SearchField
-          text={state.inputText}
-          handleChange={handleChange}
-          clear={clear}
+export const SearchContainer = ({
+  isLoading,
+  suggestions,
+  userData,
+  inputValue,
+  handleClearInput,
+  handleChange,
+  onClick,
+}) => (
+  <React.Fragment>
+    <section className="search-wrapper">
+      <SearchField
+        value={inputValue}
+        handleChange={handleChange}
+        handleClear={handleClearInput}
+      />
+
+      {suggestions ? (
+        <Suggestions
+          items={suggestions}
+          handleClick={onClick}
         />
-
-        {state.showSuggestions ? (
-          <Suggestions
-            items={state.suggestions}
-            handleClick={onClick}
-          />
-        ) : null}
-      </section>
-
-      <p className="error">{state.error}</p>
-      {state.user ? <UserInfo user={state.userData} /> : null}
-    </React.Fragment>
-  );
-};
+      ) : null}
+    </section>
+    { !isEmpty(userData) && <UserInfo user={userData} /> }
+  </React.Fragment>
+);
 
 SearchContainer.propTypes = {
-  state: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  suggestions: PropTypes.array.isRequired,
+  userData: PropTypes.object.isRequired,
+  inputValue: PropTypes.string.isRequired,
+  handleClearInput: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  clear: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

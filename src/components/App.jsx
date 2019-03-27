@@ -15,18 +15,18 @@ class App extends Component {
   }
 
   state = {
-    user: false,
+    isLoading: false,
     suggestions: [],
-    showSuggestions: false,
     userData: {},
-    inputText: ''
+    inputValue: '',
+    displayError: false,
   }
 
   handleChange = (e) => {
     let value = e.target.value;
 
     this.setState({
-      inputText: value
+      inputValue: value
     });
 
     if(value.length >= 3) {
@@ -41,11 +41,10 @@ class App extends Component {
 
   clearInput = () => {
     this.setState({
-      user: false,
       suggestions: [],
-      showSuggestions: false,
       userData: {},
-      inputText: '',
+      inputValue: '',
+      displayError: false,
     });
   }
 
@@ -56,10 +55,8 @@ class App extends Component {
     try {
       const response = await fetch(requestUrl);
       const parsed = await response.json();
-      this.setState({
-        suggestions: parsed.items,
-        showSuggestions: true,
-      })
+
+      this.setState({ suggestions: parsed.items })
     } catch(e) {
       this.displayError();
     }
@@ -67,7 +64,7 @@ class App extends Component {
 
   // Get more info about a user
   getUserData = async (user) => {
-    const requestUrl = `${URLS.USER}${user}`;
+    const requestUrl = `${URLS.USERS}${user}`;
 
     try {
       const response = await fetch(requestUrl);
@@ -80,9 +77,8 @@ class App extends Component {
 
   updateSearchState = (data) => {
     this.setState({
-      user: true,
-      showSuggestions: false,
-      inputText: data.login,
+      inputValue: data.login,
+      suggestions: [],
       userData: {
         login: data.login,
         url: data.html_url,
@@ -90,28 +86,45 @@ class App extends Component {
         name: data.name,
         location: data.location,
         joined: data.created_at
-      }
+      },
     });
+  }
+
+  toggleLoadingState = () => {
+    this.setState((prevState) => ({
+      isLoading: !prevState.isLoading,
+    }));
   }
 
   displayError = () => {
     this.setState({
-      error: 'An error occurred. Please try again.',
-      showSuggestions: false
+      displayError: 'An error occurred. Please try again.',
     });
   }
 
   render() {
+    const {
+      isLoading,
+      suggestions,
+      userData,
+      inputValue,
+      displayError,
+    } = this.state;
+
     return (
       <main className="outer-container">
         <div className="inner">
           <Title />
           <SearchContainer
-            state={this.state}
+            isLoading={isLoading}
+            suggestions={suggestions}
+            userData={userData}
+            inputValue={inputValue}
             handleChange={this.handleChange}
-            clear={this.clearInput}
+            handleClearInput={this.clearInput}
             onClick={this.handleClick}
           />
+          {displayError.length > 0 && <p className="error">{displayError}</p>}
         </div>
       </main>
     );

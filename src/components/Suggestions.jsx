@@ -10,23 +10,20 @@ const renderItems = (items, handleClick) => items.map((item, i) => (
   </li>
 ));
 
-const Suggestions = (props) => {
-  const {
-    items,
-    handleClick,
-  } = props;
-  return (
-    <nav className="suggestions">
-      <ul>
-        {items && items.length > 1 ? (
-          renderItems(items, handleClick)
-        ) : (
-          <li className="no-items">Nothing was found.</li>
-        )}
-      </ul>
-    </nav>
-  );
-};
+const Suggestions = ({
+  items,
+  handleClick,
+}) => (
+  <nav className="suggestions">
+    <ul>
+      {items ? (
+        renderItems(items, handleClick)
+      ) : (
+        <li className="no-items">Nothing was found.</li>
+      )}
+    </ul>
+  </nav>
+);
 
 Suggestions.propTypes = {
   items: PropTypes.array.isRequired,
