@@ -1,6 +1,6 @@
 {
   "short_name": "GitHub Search App",
-  "name": "Create React App Sample",
+  "name": "Search GitHub By User",
   "icons": [
     {
       "src": "favicon.ico",
