@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
 import Title from './Title';
 import SearchContainer from './SearchContainer';
-import { URLS } from '../config/config';
+import {
+  searchForUserSuggestions,
+  requestUser,
+} from '../services/services';
 import '../assets/styles/App.css'
 
 class App extends Component {
@@ -42,6 +45,7 @@ class App extends Component {
 
   clearInput = () => {
     this.setState({
+      isLoading: false,
       suggestions: [],
       showSuggestions: false,
       userData: {},
@@ -52,21 +56,18 @@ class App extends Component {
 
   // Searches GitHub API for user suggestions based on an input value
   getSuggestions = async (val) => {
-    const requestUrl = `${URLS.SEARCH}${val}`;
-
     try {
       this.toggleLoadingState();
-      const response = await fetch(requestUrl);
-      const parsed = await response.json();
+      const response = await searchForUserSuggestions(val);
 
-      // Set some artificial latency
-      setTimeout(() => {
-        this.setState({
-          suggestions: parsed.items,
-          showSuggestions: true,
-        });
-        this.toggleLoadingState();
-      }, 1000);
+    // Set some artificial latency
+    setTimeout(() => {
+      this.setState({
+        suggestions: response.items,
+        showSuggestions: true,
+      });
+      this.toggleLoadingState();
+    }, 1000);
     } catch(e) {
       this.displayError();
     }
@@ -74,15 +75,12 @@ class App extends Component {
 
   // Get more info about a user
   getUserData = async (user) => {
-    const requestUrl = `${URLS.USERS}${user}`;
-
     try {
       this.toggleLoadingState();
-      const response = await fetch(requestUrl);
-      const parsed = await response.json();
+      const response = await requestUser(user);
 
+      this.updateSearchState(response);
       this.toggleLoadingState();
-      this.updateSearchState(parsed);
     } catch(e) {
       this.displayError();
     }
@@ -112,6 +110,8 @@ class App extends Component {
 
   displayError = () => {
     this.setState({
+      isLoading: false,
+      showSuggestions: false,
       displayError: 'An error occurred. Please try again.',
     });
   }

@@ -24,12 +24,12 @@ export const SearchContainer = ({
         handleClear={handleClearInput}
       />
 
-      {showSuggestions ? (
+      {showSuggestions && (
         <Suggestions
           items={suggestions}
           handleClick={onClick}
         />
-      ) : null}
+      )}
     </section>
     { !isEmpty(userData) && <UserInfo user={userData} /> }
   </React.Fragment>

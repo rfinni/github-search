@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchContainer.jsx should render snapshot correctly 1`] = `
+<section
+  className="search-wrapper"
+>
+  <div
+    className="search-field"
+  >
+    <input
+      className="search"
+      id="search"
+      name="search"
+      onChange={[Function]}
+      placeholder="Search for a GitHub username"
+      type="text"
+      value=""
+    />
+  </div>
+</section>
+`;

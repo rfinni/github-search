@@ -4,42 +4,23 @@ import Suggestions from '../Suggestions';
 import { stubSearchResults } from '../../../testing/stubs';
 
 describe('Suggestions.jsx', () => {
-  let wrapper;
   const props = {
-    items: [],
+    items: stubSearchResults,
     handleClick: jest.fn(),
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<Suggestions {...props} />);
-  });
+  const wrapper = shallow(<Suggestions {...props} />);
 
-  it('should render initially', () => {
+  it('should render the correct amount of items when results are found', () => {
     expect(wrapper.find('.suggestions').length).toBe(1)
-  });
-
-  it('should render correctly when results are found', () => {
-    wrapper.setProps({
-      items: stubSearchResults,
-    });
-
-    const buttons = wrapper.find('ul li button');
-
-    expect(buttons.length).toBe(5);
+    expect(wrapper.find('ul li button').length).toBe(5);
     expect(wrapper.find('ul li img').length).toBe(5);
   });
 
-  it('should dispatch a click event when clicked', () => {
-    wrapper.setProps({
-      items: stubSearchResults,
-    });
-
-    const buttons = wrapper.find('ul li button');
-
-    console.log(buttons.debug());
-
-    // first.simulate('click');
-    // expect(wrapper.instance().handleClick).toHaveBeenCalledTimes(1);
+  it('should be called with the correct info when clicked', () => {
+    const firstItem = wrapper.find('ul li').first();
+    firstItem.find('button').simulate('click', {});
+    expect(props.handleClick).toHaveBeenCalledWith({}, 'rfinnie');
   });
 });
 
