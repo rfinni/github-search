@@ -18,7 +18,7 @@ const SearchField = ({
       value={value}
       onChange={e => handleChange(e)}
     />
-    {value.length > 1 && (
+    {value.length >= 1 && (
       <button
         type="button"
         onClick={handleClear}
